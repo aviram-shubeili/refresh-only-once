@@ -10,8 +10,9 @@ Idea of a mechanism that manage multiple refresh requests in a way that only a s
 4. Run the following command to restore the dependencies:
 
 ```bash
-dotnet run
+dotnet run --verbosity quiet
 ```
 
 
 ### Demo
+![2024-06-28_17-53-38](https://github.com/aviram-shubeili/async-refresh-only-once/assets/62931783/e86430fd-ebc0-4365-824c-aec9aa7f3470)
