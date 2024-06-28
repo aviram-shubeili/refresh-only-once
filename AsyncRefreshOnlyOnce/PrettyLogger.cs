@@ -18,7 +18,7 @@ namespace AsyncRefreshOnlyOnce
             Console.ForegroundColor = color;
 
             Console.WriteLine(logMessage);
-            Thread.Sleep(800); // this in order to "animate" the log
+            Thread.Sleep(500); // this in order to "animate" the log
             Console.ResetColor();
         }
     }
