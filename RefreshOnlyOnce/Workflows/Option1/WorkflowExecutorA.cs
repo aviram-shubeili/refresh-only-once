@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AsyncRefreshOnlyOnce.Controllers;
+using RefreshOnlyOnce.Controllers;
 
-namespace AsyncRefreshOnlyOnce.Workflows
+namespace RefreshOnlyOnce.Workflows
 {
     public class WorkflowExecutorA : WorkflowExecutor
     {

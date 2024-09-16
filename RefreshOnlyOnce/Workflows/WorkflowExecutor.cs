@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AsyncRefreshOnlyOnce.Workflows
+namespace RefreshOnlyOnce.Workflows
 {
     public abstract class WorkflowExecutor
     {

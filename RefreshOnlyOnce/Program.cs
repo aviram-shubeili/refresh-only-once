@@ -1,8 +1,8 @@
 ﻿using System;
-using AsyncRefreshOnlyOnce.Controllers;
-using AsyncRefreshOnlyOnce.Workflows;
+using RefreshOnlyOnce.Controllers;
+using RefreshOnlyOnce.Workflows;
 
-namespace AsyncRefreshOnlyOnce {
+namespace RefreshOnlyOnce {
     class Program {
 
         private static List<IController> _controllers;
