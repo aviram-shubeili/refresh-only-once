@@ -67,28 +67,28 @@ end
 
 	ControllerA ->> WorkflowA : Execute()
 	WorkflowA ->> StateRefresher : NotifyRefreshNeeded()
-	rect lightgreen
+	rect gray
 	StateRefresher -->> StateRefresher : _openRefreshRequests++;
 	end
 	StateRefresher -->> WorkflowA : ret
 	WorkflowA ->> ControllerB : Call()
 	ControllerB ->> WorkflowB : Execute()
 	WorkflowB ->> StateRefresher : NotifyRefreshNeeded()
-	rect lightgreen
+	rect gray
 	StateRefresher -->> StateRefresher : _openRefreshRequests++;
 	end
 	StateRefresher -->> WorkflowB : ret
 	WorkflowB ->> ControllerC : DoSomethingC()
 	ControllerC -->> WorkflowB : ret
 	WorkflowB ->> StateRefresher : RefreshState()
-	rect lightgreen
+	rect gray
 	StateRefresher -->> StateRefresher : _openRefreshRequests--;
 	end
 	StateRefresher -->> WorkflowB : ret
 	WorkflowB -->> ControllerB : ret
 	ControllerB -->> WorkflowA : ret
 	WorkflowA ->> StateRefresher : RefreshState()
-		rect lightgreen
+		rect gray
 	StateRefresher -->> StateRefresher : _openRefreshRequests-- & Refresh();
 	end
 	StateRefresher -->> WorkflowA : ret
