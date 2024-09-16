@@ -16,3 +16,82 @@ dotnet run --verbosity quiet
 
 ### Demo
 ![2024-06-28_17-53-38](https://github.com/aviram-shubeili/async-refresh-only-once/assets/62931783/e86430fd-ebc0-4365-824c-aec9aa7f3470)
+
+
+## Sequence Flow
+### Problem flow
+```mermaid
+---
+title: Problem flow
+---
+sequenceDiagram
+
+	participant ControllerA
+participant WorkflowA
+participant ControllerB
+participant WorkflowB
+participant ControllerC
+box Aqua
+participant StateRefresher
+end
+
+	ControllerA ->> WorkflowA : Execute()
+	WorkflowA ->> ControllerB : Call()
+	ControllerB ->> WorkflowB : Execute()
+	WorkflowB ->> ControllerC : DoSomethingC()
+	ControllerC -->> WorkflowB : ret
+	WorkflowB ->> StateRefresher : RefreshState()
+	StateRefresher -->> WorkflowB : ret
+	WorkflowB -->> ControllerB : ret
+	ControllerB -->> WorkflowA : ret
+	WorkflowA ->> StateRefresher : RefreshState()
+	StateRefresher -->> WorkflowA : ret
+
+```
+
+### Possible Solution flow
+```mermaid
+---
+title: Possible Solution flow
+---
+sequenceDiagram
+
+	participant ControllerA
+participant WorkflowA
+participant ControllerB
+participant WorkflowB
+participant ControllerC
+box Aqua
+participant StateRefresher
+end
+
+	ControllerA ->> WorkflowA : Execute()
+	WorkflowA ->> StateRefresher : NotifyRefreshNeeded()
+	rect lightgreen
+	StateRefresher -->> StateRefresher : _openRefreshRequests++;
+	end
+	StateRefresher -->> WorkflowA : ret
+	WorkflowA ->> ControllerB : Call()
+	ControllerB ->> WorkflowB : Execute()
+	WorkflowB ->> StateRefresher : NotifyRefreshNeeded()
+	rect lightgreen
+	StateRefresher -->> StateRefresher : _openRefreshRequests++;
+	end
+	StateRefresher -->> WorkflowB : ret
+	WorkflowB ->> ControllerC : DoSomethingC()
+	ControllerC -->> WorkflowB : ret
+	WorkflowB ->> StateRefresher : RefreshState()
+	rect lightgreen
+	StateRefresher -->> StateRefresher : _openRefreshRequests--;
+	end
+	StateRefresher -->> WorkflowB : ret
+	WorkflowB -->> ControllerB : ret
+	ControllerB -->> WorkflowA : ret
+	WorkflowA ->> StateRefresher : RefreshState()
+		rect lightgreen
+	StateRefresher -->> StateRefresher : _openRefreshRequests-- & Refresh();
+	end
+	StateRefresher -->> WorkflowA : ret
+
+
+```
